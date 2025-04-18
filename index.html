@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hCaptcha Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        #submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #submit-btn:hover {
+            background-color: #005fa3;
+        }
+        #token-display {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            word-break: break-all;
+            text-align: left;
+            max-height: 100px;
+            overflow-y: auto;
+            display: none;
+        }
+    </style>
+    <!-- hCaptcha API script -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <form id="captcha-form">
+            <!-- hCaptcha widget will be inserted here -->
+            <div class="h-captcha" 
+                 data-sitekey="00000000-0000-0000-0000-000000000000" 
+                 data-callback="onCaptchaSuccess"></div>
+            
+            <button id="submit-btn" type="button" disabled>Submit</button>
+        </form>
+        
+        <div id="token-display"></div>
+    </div>
+
+    <script>
+        // Function to handle successful captcha completion
+        function onCaptchaSuccess(token) {
+            // Enable the submit button once captcha is solved
+            document.getElementById('submit-btn').disabled = false;
+            
+            // Display the token (for demonstration purposes)
+            const tokenDisplay = document.getElementById('token-display');
+            tokenDisplay.style.display = 'block';
+            tokenDisplay.textContent = 'hCaptcha Token: ' + token;
+            
+            console.log('hCaptcha Token:', token);
+        }
+
+        // Add event listener to the submit button
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            alert('Form would be submitted with the hCaptcha token!');
+            // In a real application, you would send the token to your server here
+        });
+    </script>
+</body>
+</html>
